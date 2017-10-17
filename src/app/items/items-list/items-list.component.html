@@ -1,0 +1,57 @@
+<div>
+	<nav class="navbar-default"  style="padding-top:10px;padding-bottom:10px;color:black">
+	  <div class='container-fluid'>
+		<ul class="nav navbar-nav">
+		  <div class="panel-heading">Welcome to Online Food App</div>
+		</ul>
+		<ul class="nav navbar-nav navbar-right" *ngIf="!selectedItemsCount>0">
+			<button type="button" class="btn btn-default btn-sm" style="margin-top: 8px; margin-right:10px" (click)="goToCart()">
+				<span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
+			  </button>
+		</ul>
+		<ul class="nav navbar-nav navbar-right" *ngIf="selectedItemsCount>0">
+		<button type="button" class="btn btn-default btn-sm" style="margin-top: 8px; margin-right:10px"  (click)="goToCart()">
+			<span class="glyphicon glyphicon-shopping-cart"></span> {{selectedItemsCount}} Items, Rs. {{orderTotal}}
+		  </button>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<div class="panel-heading" style="margin-right: 2px">Welcome Guest !!</div>
+		</ul>
+		</div>
+	</nav>
+</div>
+<div class="list-group col-xs-3" style="padding-top:10px">
+	<a class="list-group-item " (click)="filteredItems('all')">
+		<i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; ALL 
+		<i class='glyphicon glyphicon-chevron-right'style="color: lightslategray;"></i>
+	</a>
+	<a class="list-group-item" (click)="filteredItems('main')">
+		<i class="fa fa-book fa-fw" aria-hidden="true"></i>&nbsp; Biryanis
+		<i class='glyphicon glyphicon-chevron-right' style="color: lightslategray;"></i>
+	</a>
+	<a class="list-group-item" (click)="filteredItems('starter')">
+		<i class="fa fa-pencil fa-fw" aria-hidden="true"></i>&nbsp; Starters
+		<i class='glyphicon glyphicon-chevron-right' style="color: lightslategray;"></i>
+	</a>
+	<a class="list-group-item" (click)="filteredItems('dessert')">
+		<i class="fa fa-cog fa-fw" aria-hidden="true"></i>&nbsp; Desserts
+		<i class='glyphicon glyphicon-chevron-right' style="color: lightslategray;"></i>
+	</a>
+</div>
+  <div class="col-xs-9" *ngIf="items && items.length" style="padding-top:10px">
+						<div class="col-xs-3" *ngFor='let item of items'>
+							<span class="thumbnail text-center">
+								<div class="caption">
+									<div>
+										<a [routerLink]="[item.itemId]" >
+											{{item.itemName}} </a>
+									</div>
+									<div>{{ item.price | currency:'INR':true:'1.2-2'}}</div>
+									<div >
+										<button (click)="addCart(item.itemId)"class="btn btn-primary">Add to Cart</button>
+									</div>
+								</div>
+							</span>
+						</div>
+	</div>
+	

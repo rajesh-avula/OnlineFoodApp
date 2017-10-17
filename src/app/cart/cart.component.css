@@ -1,0 +1,32 @@
+.panelpos{
+    position: relative; top: 150px; left: 380px; width: 46%;
+}
+
+.paymentpanelpos{
+    position: relative; 
+    top: 150px; 
+    left: 380px; 
+    text-align: center; 
+    width: 43%;
+}
+
+.tableheadercolor{
+    color: blue;
+}
+
+.center{
+    text-align:center;
+}
+
+.text-form{
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}

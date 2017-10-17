@@ -1,0 +1,63 @@
+[
+    {
+        "itemId": 1,
+		"itemName": "Chicken Biryani",
+		"description": "Dum Biryani",
+        "price": 250,
+        "category":"main",
+        "imageUrl":"assets/images/chicken_biryani.jpg"
+    },
+    {
+        "itemId": 2,
+		"itemName": "Mutton Biryani",
+		"description": "Dum Biryani",
+        "price": 250,
+        "category":"main",
+        "imageUrl":"assets/images/mutton_biryani.jpg"
+        
+    },
+    {
+        "itemId": 3,
+		"itemName": "Butter Chicken",
+		"description": "Yummy Taste",
+        "price": 200,
+        "category":"starter",
+        "imageUrl":""
+        
+    },
+    {
+        "itemId": 4,
+		"itemName": "Chicken Manchuria",
+		"description": "Spicy chicken",
+        "price": 150,
+        "category":"starter",
+        "imageUrl":""
+        
+    },
+    {
+        "itemId": 5,
+		"itemName": "Pepper Chicken",
+		"description": "Crunchy",
+        "price": 200,
+        "category":"starter",
+        "imageUrl":""
+        
+    },
+    {
+        "itemId": 6,
+		"itemName": "Gulab Jamun",
+		"description": "Gulab Jamun with venilla ice cream flavour is a great combination.",
+        "price": 80,
+        "category":"dessert",
+        "imageUrl":"assets/images/gulab_jamun.jpg"
+    },
+    {
+        "itemId": 7,
+		"itemName": "Double ka Mitha",
+		"description": "It's simply superb to have after Dhum biryani.",
+        "price": 80,
+        "category":"dessert",
+        "imageUrl":"assets/images/double_ka_mitha.jpg"
+    }
+
+]

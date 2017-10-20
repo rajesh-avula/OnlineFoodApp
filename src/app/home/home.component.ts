@@ -19,6 +19,7 @@ export class HomeComponent  {
     users => {
       this.users = users;
     });
+    sessionStorage.removeItem('selectedItems');
    }
 
   loginasguest() {

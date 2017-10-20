@@ -2,20 +2,20 @@
   <nav class="navbar-default" style="padding-top:10px;padding-bottom:10px;color:black">
     <div class='container-fluid'>
       <ul class="nav navbar-nav">
-        <div class="panel-heading">Welcome to Online Food App</div>
+        <div class="panel-heading pane-mobile">Welcome to Online Food App</div>
       </ul>
-      <ul class="nav navbar-nav navbar-right" *ngIf="!selectedItemsCount>0">
-        <button type="button" class="btn btn-default btn-sm" style="margin-top: 8px; margin-right:10px" (click)="goToCart()">
-          <span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
+      <ul class="nav navbar-nav navbar-right" *ngIf="itemsCount() == false">
+        <button type="button" class="btn btn-default btn-sm mobile-nav" style="margin-top: 8px; margin-right:10px" (click)="goToCart()">
+          <span class="glyphicon glyphicon-shopping-cart"></span> Orders
         </button>
       </ul>
-      <ul class="nav navbar-nav navbar-right" *ngIf="selectedItemsCount>0">
-        <button type="button" class="btn btn-default btn-sm" style="margin-top: 8px; margin-right:10px" (click)="goToCart()">
+      <ul class="nav navbar-nav navbar-right" *ngIf="itemsCount() == true">
+        <button type="button" class="btn btn-default btn-sm mobile-nav" style="margin-top: 8px; margin-right:10px" (click)="goToCart()">
           <span class="glyphicon glyphicon-shopping-cart"></span> {{selectedItemsCount}} Items, Rs. {{orderTotal}}
         </button>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <div class="panel-heading" style="margin-right: 2px">Welcome Guest !!</div>
+        <div class="panel-heading pane-mobile" style="margin-right: 2px">Welcome Guest !!</div>
       </ul>
     </div>
   </nav>
@@ -23,7 +23,7 @@
 
 <div class="container panelpos" style="padding-top:10px">
     <div class="row">
-      <div class="col-xs-7 col-xs-offset-3">
+      <div class="col-sm-7 col-sm-offset-3">
         <div class='panel panel-primary'>
           <div class='panel-heading'>{{pageTitle}}</div>
           <div class='panel-body'>

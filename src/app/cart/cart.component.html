@@ -1,32 +1,28 @@
 <div>
-	<nav class="navbar-default">
-	  <div class='container-fluid'>
+	<nav class="navbar-default nav-bar-fixed container-fluid">
 		<ul class="nav navbar-nav">
-		  <div class="panel-heading">Welcome to Online Food App</div>
+		  <div class="panel-heading pane-mobile ">Welcome to Online Food App</div>
 		</ul>
-		<ul class="nav navbar-nav navbar-right" *ngIf="!selectedItemsCount>0">
-			<button type="button" class="btn btn-default btn-sm" style="margin-top: 8px; margin-right:10px" (click)="goToCart()">
-				<span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
+		<ul class="nav navbar-nav navbar-right" *ngIf="!itemsCount()">
+			<button type="button" class="btn btn-default btn-sm mobile-nav" style="margin-top: 8px; margin-right:10px">
+				<span class="glyphicon glyphicon-shopping-cart"></span> Orders
 			  </button>
 		</ul>
-		<ul class="nav navbar-nav navbar-right" *ngIf="selectedItemsCount>0">
-		<button type="button" class="btn btn-default btn-sm" style="margin-top: 8px; margin-right:10px"  (click)="goToCart()">
+		<ul class="nav navbar-nav navbar-right" *ngIf="itemsCount()">
+		<button type="button" class="btn btn-default btn-sm mobile-nav" style="margin-top: 8px; margin-right:10px" >
 			<span class="glyphicon glyphicon-shopping-cart"></span> {{selectedItemsCount}} Items, Rs. {{grandTotal}}
 		  </button>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
-			<div class="panel-heading" style="margin-right: 2px">Welcome Guest !!</div>
+			<div class="panel-heading pane-mobile" style="margin-right: 2px">Welcome Guest !!</div>
 		</ul>
-		</div>
 	</nav>
 </div>
-<div *ngIf="!selectedItemsCount>0"  style="padding-top:10px; margin:2%">
+<div *ngIf="!itemsCount() && !submit"  style="margin:2%" class="mobile-padding">
 	<div class="thumbnail">
 		<img src="assets/images/empty_cart.png" class="img-rounded" alt="Cart is empty" width="175 !important" height="236 !important">
 		<br>
 		<div style="text-align:center">
-			<a class="btn btn-default"> Oops !!!</a>
-			<br>
 			<br> Shopping Cart is empty
 			<br>
 			<br>
@@ -36,53 +32,69 @@
 		</div>
 	</div>
 </div>
-<div  *ngIf="selectedItemsCount>0">
-	<div class="col-xs-8" style="padding-top:10px">
-				<div class=" thumbnail" style="padding:50px !important" >
-					<div *ngFor="let item of selectedItems">
-									<div class="row">
-										<div class="col-xs-4">
-											<a [routerLink]="[item.itemId]">
-												{{item.itemName}} </a>
-										</div>
-										<div class="col-xs-4">
-											Price : {{ item.price | currency:'INR':true:'1.2-2'}}
-										</div> 
+<div *ngIf="!itemsCount() && submit"  style="margin:2%" class="mobile-padding">
+		<div class="thumbnail">
+			<img src="assets/images/empty_cart.png" class="img-rounded" alt="Cart is empty" width="175 !important" height="236 !important">
+			<br>
+			<div style="text-align:center">
+				<br> <span class="alert alert-success"> Your Order is successfully placed</span>
+				<br>
+				<br>
+				<div style="padding-bottom:10px">
+					<button type="button" class="btn btn-primary" (click)="gotoItems()">Place new Order</button>
+				</div>
+			</div>
+		</div>
+</div>
+	<div class="col-sm-8 col-xs-12 mobile-padding" *ngIf="itemsCount()" >
+				<div class=" thumbnail" style="padding:25px !important" >
+					<div *ngFor="let item of selectedItems" class="panel panel-default">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-sm-4 col-xs-6">
+									<b>{{item.itemName}}</b> 
 								</div>
-								<br>	
-					<div class="row">
-						<div class="col-xs-4"></div>
-						<div class="col-xs-4">
-						Quantity: <input type="number" id="quant" class="text-form" [(ngModel)]=item.quantity min="1" max="100" (change)="updateCart(item)">
+								<div class="col-sm-4 col-xs-6" style="float:right">
+									<b>Price :</b> {{ item.price | currency:'INR':true:'1.2-2'}}
+								</div> 
+							</div>
+							<br >	
+							<div class="row">
+								<div class="col-sm-4 col-xs-4" >
+											<a (click)="deleteItem(item.itemId)">Remove</a>
+								</div>
+								<div class="col-sm-4" style="float:right">
+									<b> Quantity :</b> <input type="number" id="quant" class="text-form" [(ngModel)]=item.quantity min="1" max="100" (change)="updateCart(item)">
+								</div>
+								
+							</div>
+							
 						</div>
 					</div>
-					<br>
-					<div *ngIf="item.imageUrl" align="center"  class="row">
-						<img [src]='item.imageUrl' [style.width.px]='imageWidth' [style.height.px]='imageHeight' class='img-thumbnail'/>
+					<div class="row" style="margin:0">
+							<button class="btn btn-primary btn-small hidden-xs" (click)="gotoItems()"> Go to Home</button>
 					</div>
-					</div>
-							</div>
-				
+				</div>
 	</div>
-	<div class="col-xs-4" style="padding-top:10px" >
+	<div class="col-sm-4 col-xs-12" *ngIf="itemsCount()" style="padding-top:10px" >
 		<div class="thumbnail"  style="padding:50px !important">
 			<div class="row">
-				Payment Summary
+				<b>Payment Summary</b> 
 			</div>
 			<br>
 			<div class="row">
-				<div class="col-xs-6"> Sub Total</div>
+				<div class="col-xs-6"> <b>Sub Total</b></div>
 				<div class="col-xs-6">{{grandTotal | currency:'INR':true:'1.2-2'}}</div>
 			</div>
 			<br>
 			<div class="row">
-				<div class="col-xs-6"> Delivery Charges</div>
+				<div class="col-xs-6"> <b>Delivery Charges</b></div>
 				<div class="col-xs-6">{{deliveryCharge | currency:'INR':true:'1.2-2'}}</div>
 			</div>
 			<br>
-			<hr size="2px">
+			<hr  class="line">
 			<div class="row">
-				<div class="col-xs-6">Total</div>
+				<div class="col-xs-6"><b>Total</b> </div>
 				<div class="col-xs-6">{{grandTotal+deliveryCharge | currency:'INR':true:'1.2-2'}}</div>
 			</div>
 			<br>
@@ -93,8 +105,7 @@
 		</div>
 		
 	</div>
-</div>
 
-<div class="alert alert-success" *ngIf="submit" style="width:30%;margin-left:35%">
+<!-- <div class="alert alert-success " *ngIf="submit" style="margin:2%; text-align:center" >
 	Your payment is succesfull and order will be delivered soon
-</div>
+</div> -->

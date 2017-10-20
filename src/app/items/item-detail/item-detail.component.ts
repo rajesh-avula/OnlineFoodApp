@@ -7,27 +7,48 @@ import { Item } from '../Item';
   styleUrls: ['./item-detail.component.css']
 })
 export class ItemDetailComponent  {
-  pageTitle: string = 'Items Detail';
+  pageTitle = 'Items Detail';
   item: Item;
-  id: number = 0;
+  id = 0;
+  items: any= [];
   selectedItems: any = [];
   selectedItemsCount: any = 0;
-  imageWidth: number = 100;
-  imageHeight: number = 100;
+  imageWidth = 100;
+  errorMessage: string;
+  imageHeight = 100;
   orderTotal: any = 0;
   constructor(private route: ActivatedRoute,
-    private router: Router, public _itemService: ItemService) {
-      this.selectedItems = this._itemService.selectedItems;
+    private _router: Router, public _itemService: ItemService) {
+      this.selectedItems = JSON.parse(sessionStorage.getItem('selectedItems'));
+      this.id = + this.route.snapshot.paramMap.get('id');
+      this._itemService.getItems()
+      .subscribe(
+      items => {
+        this._itemService.items = items;
+        this.items = items;
+        this.item = this._itemService.items.filter((item: any) => item.itemId === this.id)[0];
+      },
+      error => this.errorMessage = <any>error);
       if (this.selectedItems && this.selectedItems.length > 0) {
-        this.selectedItemsCount = Number(sessionStorage.getItem('selectedItemsCount'));
-        this.orderTotal = Number(sessionStorage.getItem('orderTotal'));
+        this.selectedItemsCount = this.selectedItems.length;
+        for (let i = 0; i < this.selectedItems.length; i++) {
+          this.orderTotal += this.selectedItems[i].totalPrice;
+        }
       }
-      this.id=+this.route.snapshot.paramMap.get('id');
-      this.item=this._itemService.items.filter((item:any)=> item.itemId === this.id)[0];
      }
 
   onBack(): void {
-      this.router.navigate(['/items']);
+      this._router.navigate(['/items']);
   }
-
+  itemsCount(): boolean {
+    if (this.selectedItemsCount > 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+  }
+  goToCart() {
+    this._router.navigate(['/cart']);
+  }
 }

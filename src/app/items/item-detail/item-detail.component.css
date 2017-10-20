@@ -1,0 +1,10 @@
+@media(max-width:670px){
+    .mobile-nav{
+        margin-left:15px !important; 
+    }
+    .pane-mobile{
+        padding-top:0px;
+        padding-bottom:0px;
+    }
+    
+}

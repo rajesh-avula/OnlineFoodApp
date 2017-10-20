@@ -12,18 +12,14 @@ export class ItemService {
     selectedItems: any = [];
     selectedItemsCount: any = 0;
     constructor(private _http: Http) {
-        if (sessionStorage.getItem("selectedItems")) {
-            this.selectedItems = JSON.parse(sessionStorage.getItem("selectedItems"));
+        if (sessionStorage.getItem('selectedItems')) {
+            this.selectedItems = JSON.parse(sessionStorage.getItem('selectedItems'));
         }
-        else{
-            this.selectedItems=[];
+        // tslint:disable-next-line:one-line
+        else {
+            this.selectedItems = [];
         }
-        if (sessionStorage.getItem("selectedItemsCount")) {
-            this.selectedItemsCount = JSON.parse(sessionStorage.getItem("selectedItemsCount"));
-        }
-        else{
-            this.selectedItemsCount=0;
-        }
+        this.selectedItemsCount = this.selectedItems.length;
     }
 
     getItems(): Observable<Item[]> {

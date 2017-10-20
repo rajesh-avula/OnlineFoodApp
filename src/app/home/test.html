@@ -1,0 +1,25 @@
+<div class="">
+    <div id="div1" style="text-align:center">
+        <div class="row alert alert-warning" *ngIf="showMessage" style="margin:1%">
+            Please login with valid user or use guest account.
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="usr">Username:</label>
+            <input type="text" class="text-form" id="usr" [(ngModel)]="username"placeholder="Enter username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter username'" >
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="usr">Password:</label>
+            <input type="password" class="text-form" id="usr" [(ngModel)]="password" placeholder="Enter password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter password'">
+        </div>
+        <br>
+        <div class="form-group">
+            <a class="btn btn-primary"(click)="loginasAdmin()">Login</a>
+        </div>
+        <br>
+        
+        <div>
+                Continue as <a (click)="loginasguest()">Guest!!</a>
+        </div>
+</div>

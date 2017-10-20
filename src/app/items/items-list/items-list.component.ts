@@ -20,36 +20,36 @@ export class ItemsListComponent  {
   orderTotal: any= 0;
   constructor(private _router: Router, private _itemService: ItemService) {
     this.paymentStatus = false;
-    this.selectedItems = this._itemService.selectedItems;
+    this.selectedItems = JSON.parse(sessionStorage.getItem('selectedItems'));
     this._itemService.getItems()
             .subscribe(
             items => {
               this._itemService.items = items;
-                this.items = items;
+              this.items = items;
             },
             error => this.errorMessage = <any>error);
     if (this.selectedItems && this.selectedItems.length > 0) {
-              this.selectedItemsCount = Number(sessionStorage.getItem('selectedItemsCount'));
-              this.orderTotal = Number(sessionStorage.getItem('orderTotal'));
-         }
+      this.selectedItemsCount = this.selectedItems.length;
+      for (let i = 0; i < this.selectedItems.length; i++) {
+        this.orderTotal += this.selectedItems[i].totalPrice;
+      }
+    }
   }
   addCart(id: number) {
     this.cart = new Cart();
     this.selectedItemsCount += 1;
-    this._itemService.selectedItemsCount += 1;
-    var item = this._itemService.items.filter((item: any) => item.itemId === id)[0];
+    const item = this._itemService.items.filter((item: any) => item.itemId === id)[0];
     this.subTotal += item.price;
     this.orderTotal += item.price;
-    var selected = this._itemService.selectedItems.filter((item: any) => item.itemId === id)[0];
-    sessionStorage.setItem('selectedItemsCount', JSON.stringify(this._itemService.selectedItemsCount));
-    sessionStorage.setItem('orderTotal', JSON.stringify(this.orderTotal));
+    const selected = this._itemService.selectedItems.filter(( item: any) => item.itemId === id)[0];
     if (selected) {
-      var index = this._itemService.selectedItems.findIndex((item: any) => item.itemId === id);
+      const index = this._itemService.selectedItems.findIndex((item: any) => item.itemId === id);
       this._itemService.selectedItems[index].quantity += 1;
       this._itemService.selectedItems[index].totalPrice += item.price;
-    } 
-    else{   
-      this.cart.orderId = "ORD_" + this.orderId;
+    }
+    else {
+      this._itemService.selectedItemsCount += 1;
+      this.cart.orderId = 'ORD_' + this.orderId;
       this.cart.itemId = id;
       this.cart.itemName = item.itemName;
       this.cart.price = item.price;
@@ -67,6 +67,14 @@ export class ItemsListComponent  {
     }
     else{
       this.items = this._itemService.items.filter(item => item.category === categoryType);
+    }
+  }
+  itemsCount(): boolean {
+    if (this.selectedItemsCount > 0) {
+        return true;
+    }
+    else {
+        return false;
     }
   }
   goToCart() {
